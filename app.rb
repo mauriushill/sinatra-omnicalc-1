@@ -17,6 +17,17 @@ get("/square/results") do
  
 end
 
+get("/square_root/new") do
+  erb( :squareroot)
+end
+
+get("/square_root/results") do
+  
+  @the_root = params.fetch("user_number").to_f
+  @the_root_results = @the_root ** 0.5
+  
+  erb( :squareroot_results)
+end
 
 get("/") do
   "
