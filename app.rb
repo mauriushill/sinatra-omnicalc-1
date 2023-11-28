@@ -29,6 +29,14 @@ get("/square_root/results") do
   erb( :squareroot_results)
 end
 
+get("/payment/new") do
+  erb( :payment_num)
+end
+
+get("/payment/results") do
+  erb( :payment_results)
+end
+
 get("/") do
   "
   <h1>Welcome to your Sinatra App!</h1>
