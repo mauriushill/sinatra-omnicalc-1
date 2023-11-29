@@ -34,10 +34,10 @@ get("/payment/new") do
 end
 
 get("/payment/results") do
-  erb( :payment_results)
+  
 @apr = params.fetch("user_apr").to_f
-@years = params.fetch("user_years").to_f
-@principal = params.fetch("user_pv").to_f.round(2)
+@years = params.fetch("user_years").to_f.round(0)
+@principal = params.fetch("user_pv").to_f
 
 monthly_apr = (@apr / 100) / 12.00
 
@@ -55,11 +55,23 @@ erb(:payment_results)
 
 end
 
+get("/random/new") do
+  erb( :random_num)
+end
+
+get("/random/results") do
+  
+@min = params.fetch("min_num").to_f
+@max = params.fetch("max_num").to_f
+@random = rand(@min..@max).to_f
+
+erb( :random_results)
+
+end
+
 get("/") do
   "
   <h1>Welcome to your Sinatra App!</h1>
   <p>Define some routes in app.rb</p>
   "
 end
-
-#rand(@min..@max).to_f
