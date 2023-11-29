@@ -35,6 +35,24 @@ end
 
 get("/payment/results") do
   erb( :payment_results)
+@apr = params.fetch("user_apr").to_f
+@years = params.fetch("user_years").to_f
+@principal = params.fetch("user_pv").to_f.round(2)
+
+monthly_apr = (@apr / 100) / 12.00
+
+n = @years * 12
+
+numerator = @principal * monthly_apr * (1 + monthly_apr)**n
+denominator = (1 + monthly_apr)**n - 1
+@payment = (numerator / denominator).to_f.round(2)
+@monthly_payment = "$#{@payment}"
+
+@principal_currency = "$#{@principal}"
+
+erb(:payment_results)
+
+
 end
 
 get("/") do
@@ -43,3 +61,5 @@ get("/") do
   <p>Define some routes in app.rb</p>
   "
 end
+
+#rand(@min..@max).to_f
