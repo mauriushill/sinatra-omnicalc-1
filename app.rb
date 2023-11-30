@@ -39,14 +39,16 @@ get("/payment/results") do
 @years = params.fetch("user_years").to_f.round(0)
 @principal = params.fetch("user_pv").to_f
 
-monthly_apr = (@apr / 100) / 12.00
+@monthly_apr = (@apr / 100.0) / 12.00
 
-n = @years * 12
+@n = @years * 12.0
 
-numerator = @principal * monthly_apr * (1 + monthly_apr)**n
-denominator = (1 + monthly_apr)**n - 1
-@payment = (numerator / denominator).to_f.round(2)
-@monthly_payment = "$#{@payment}"
+@numerator = (@principal * @monthly_apr)
+@denominator = 1.0 - ((1.0 + @monthly_apr)**-@n)
+@payment = @numerator / @denominator
+#@monthly_payment = "$#{@payment}"
+
+
 
 @principal_currency = "$#{@principal}"
 
